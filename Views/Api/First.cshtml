@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "First";
+}
+
+<h1>First</h1>
+<button id="button1" class="btn btn-outline-primary">Ajax</button>
+<div id="div1" class="alert alert-info"></div>
+
+@section Scripts{
+    <script>
+        const btn = document.querySelector('#button1');
+        const theDiv = document.querySelector('#div1');
+        // btn.addEventListener(('click'), () => {
+        //     //去撈apicontroller裡index的內容
+        //     fetch('/api/Index')
+        //         .then(response => {
+        //             // console.log(response); 
+        //             // console.log(response.text());
+
+        //             return response.text();
+        //         })
+        //         .then(data => {
+        //             theDiv.innerHTML=`<h2>${data}</h2>`
+        //         })
+
+        //     // theDiv.innerHTML = "Ajax.....";
+        // })
+        btn.addEventListener(('click'), () => {
+            //去撈apicontroller裡index的內容
+            // fetch('/api/Index')若放到其他環境路徑可能出錯
+            fetch('@Url.Content("~api/index")')
+                .then(response => response.text())
+                .then(data => {
+                    theDiv.innerHTML = `<h2>${data}</h2>`
+                })
+
+            // theDiv.innerHTML = "Ajax.....";
+        })
+    </script>
+}
