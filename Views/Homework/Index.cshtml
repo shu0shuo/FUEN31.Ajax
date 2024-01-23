@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<div class="cards">
+
+</div>
+
+@section Scripts{
+    <script src="~/js/travel.js"></script>
+    <script>
+        const northernSpots = spots.CommonFormat.Section.map((spot) => {
+            const { stitle, xbody, file } = spot;
+            return { stitle, xbody, file };
+        });
+        console.log(northernSpots);
+
+        const spotsContainer = document.querySelector(".cards");
+        let createCards = ((card = {}) => {
+            let stitle = card.stitle;
+            let xbody = card.xbody;
+            let file = card.file;
+
+            let template = `<div class="row row-cols-1 row-cols-md-2 g-4">
+                          <div class="col">
+                            <div class="card">
+                              <img src="${file}" class="card-img-top" alt="...">
+                              <div class="card-body">
+                                <h5 class="card-title">${stitle}</h5>
+                                <p class="card-text">${xbody}</p>
+                              </div>
+                            </div>
+                          </div>`
+
+            let node = document.createElement("div");
+            node.innerHTML = template;
+            return node.children[0];
+
+        });
+
+        const createdSpots = northernSpots.map((spots) => {
+            return createCards(spots);
+        });
+
+        createdSpots.forEach((spot) => {
+            spotsContainer.append(spot);
+        });
+
+
+
+
+       
+        // console.log(spots.CommonFormat.Section);
+    </script>
+}

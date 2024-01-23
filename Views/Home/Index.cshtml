@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div>
+    <ul class="emps">
+
+    </ul>
+
+</div>
+
+@section Scripts{
+    <script>
+                const emps = [{ "name": "Tom", "workYears": 3, "salary": 35000 },
+                { "name": "Jack", "workYears": 5, "salary": 40000 },
+                { "name": "Mary", "workYears": 7, "salary": 45000 }];
+
+        const empsContainer = document.querySelector(".emps");
+
+        let createEmps = (employees = {}) => {
+            let name = employees.name;
+            let workYears = employees.workYears;
+            let salary = employees.salary;
+
+            let template = `<li>${name},${workYears},${salary}</li>`
+
+
+            let node = document.createElement("ul");
+            node.innerHTML = template;
+            return node.children[0];
+        };
+
+        const createdEmps = emps.map((employees) => {
+            return createEmps(employees);
+        });
+
+        createdEmps.forEach((emp) => {
+            empsContainer.append(emp);
+        });
+
+               
+
+
+
+
+
+        // //建立promise物件
+        //         const promise = new Promise((resolve, reject) => {
+        //             const num = Math.random() > 0.5 ? 1 : 0;
+        //             if (num) {
+        //                 resolve("成功>0.5");
+        //             } else {
+        //                 reject("失敗<0.5")
+        //             }
+        //         });
+
+        //         //使用promise
+        //         promise.then((data) => {
+        //             console.log(data);
+        //         })
+        //             .catch((err) => {
+        //                 console.log(err);
+        //             })
+        //             .finally(() => {
+        //                 console.log("END")
+        //             })
+    </script>
+
+
+}
+
