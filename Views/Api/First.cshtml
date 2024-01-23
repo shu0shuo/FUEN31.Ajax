@@ -4,38 +4,67 @@
 }
 
 <h1>First</h1>
-<button id="button1" class="btn btn-outline-primary">Ajax</button>
+<button id="button1" class="btn btn-outline-primary mb-3">Ajax Start</button>
+<button id="button2" class="btn btn-outline-primary mb-3">Ajax Stop</button>
+<img src="~/images/Ghost.gif" id="img1" style="display:none" />
 <div id="div1" class="alert alert-info"></div>
 
 @section Scripts{
     <script>
         const btn = document.querySelector('#button1');
+        const btnStop = document.querySelector('#button2');
         const theDiv = document.querySelector('#div1');
+        const imgLoader = document.querySelector('#img1');
+
+        btn.addEventListener('click', async () => {
+            try {
+                imgLoader.style.display="inline";
+                btn.setAttribute('disabled', "disabled");
+                //Ajax
+                btn.textContent = "執行中...";
+
+                const response = await fetch('@Url.Content("~/api/index")');
+                if (!response.ok) {
+                    throw new Error(response.status);
+                }
+                const data = await response.text();
+                theDiv.innerHTML = `<h2>${data}</h2>`
+            } catch (err) {
+                theDiv.innerHTML = `<h2>${err}</h2>`
+            } finally {
+                imgLoader.style.display = "none";
+                btn.removeAttribute('disabled');
+                btn.textContent = "Ajax Start";
+
+            }
+            
+        })
+
+        // // btn.addEventListener(('click'), () => {
+        // //     //去撈apicontroller裡index的內容
+        // //     fetch('/api/Index')
+        // //         .then(response => {
+        // //             // console.log(response); 
+        // //             // console.log(response.text());
+
+        // //             return response.text();
+        // //         })
+        // //         .then(data => {
+        // //             theDiv.innerHTML=`<h2>${data}</h2>`
+        // //         })
+
+        // //     // theDiv.innerHTML = "Ajax.....";
+        // // })
         // btn.addEventListener(('click'), () => {
         //     //去撈apicontroller裡index的內容
-        //     fetch('/api/Index')
-        //         .then(response => {
-        //             // console.log(response); 
-        //             // console.log(response.text());
-
-        //             return response.text();
-        //         })
+        //     // fetch('/api/Index')若放到其他環境路徑可能出錯
+        //     fetch('Url.Content("~api/index")')
+        //         .then(response => response.text())
         //         .then(data => {
-        //             theDiv.innerHTML=`<h2>${data}</h2>`
+        //             theDiv.innerHTML = `<h2>${data}</h2>`
         //         })
 
         //     // theDiv.innerHTML = "Ajax.....";
         // })
-        btn.addEventListener(('click'), () => {
-            //去撈apicontroller裡index的內容
-            // fetch('/api/Index')若放到其他環境路徑可能出錯
-            fetch('@Url.Content("~api/index")')
-                .then(response => response.text())
-                .then(data => {
-                    theDiv.innerHTML = `<h2>${data}</h2>`
-                })
-
-            // theDiv.innerHTML = "Ajax.....";
-        })
     </script>
 }

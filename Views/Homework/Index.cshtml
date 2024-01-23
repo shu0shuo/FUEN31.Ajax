@@ -40,10 +40,15 @@
         let createCards = ((card = {}) => {
             let stitle = card.stitle;
             let xbody = card.xbody;
-            let images = card.file;
-            let carouselItems = images.map((file) => {
-                return createCarouselItems(file.img.text, file.img["@description"])
-            })
+            let images = card.file.img;
+            console.log(typeof (images));
+            if (Array.isArray(images)) {
+                let carouselItems = images.map(img => {
+                    return createCarouselItems(img.text, img["description"])
+                })
+            }
+            return "";
+        })
 
             // let template = `<div class="row row-cols-1 row-cols-md-2 g-4">
             //               <div class="col">
@@ -80,19 +85,18 @@
                                 </div>
                             </div>`;
 
-            let node = document.createElement("div");
-            node.innerHTML = template;
-            return node.children[0];
+            // let node = document.createElement("div");
+            // node.innerHTML = template;
+        return template;
 
         });
 
         const createdSpots = northernSpots.map((spots) => {
             return createCards(spots);
-        });
+        }).join("");
 
-        createdSpots.forEach((spot) => {
-            spotsContainer.append(spot);
-        });
+
+        spotsContainer.innerHTML = createdSpots
 
 
 
