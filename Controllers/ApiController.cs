@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Models;
+using WebApplication2.Models.Dtos;
 
 namespace WebApplication2.Controllers
 {
@@ -51,7 +52,7 @@ namespace WebApplication2.Controllers
 
         }
 
-        public IActionResult Register(string name, int age=26)
+        public IActionResult Register(UserDto dto)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -60,5 +61,16 @@ namespace WebApplication2.Controllers
             return Content($"Hello{name},you are{age} years old.");
 
         }
+
+
+        //public IActionResult Register(string name, int age=26)
+        //{
+        //    if (string.IsNullOrEmpty(name))
+        //    {
+        //        name = "Guest";
+        //    }
+        //    return Content($"Hello{name},you are{age} years old.");
+
+        //}
     }
 }
