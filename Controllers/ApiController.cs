@@ -52,13 +52,13 @@ namespace WebApplication2.Controllers
 
         }
 
-        public IActionResult Register(UserDto dto)
+        public IActionResult Register(UserDto _user)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(_user.Name))
             {
-                name = "Guest";
+                _user.Name = "Guest";
             }
-            return Content($"Hello{name},you are{age} years old.");
+            return Content($"Hello{_user.Name},you are{_user.Age} years old. Yuor email address is {_user.Email}");
 
         }
 
