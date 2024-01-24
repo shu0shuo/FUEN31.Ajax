@@ -3,15 +3,15 @@
     public class SearchDto
     {
         //搜尋
-        public string? keyword {  get; set; }
-        public int? categoryId { get; set; } = 0;//0表示不根據分類編號搜尋
+        public string? Keyword {  get; set; }
+        public int? CategoryId { get; set; } = 0;//0表示不根據分類編號搜尋
 
         //排序
-        public string? sortBy {  get; set; }
-        public string? sortType { get; set; } = "asc";
+        public string? SortBy {  get; set; }
+        public string? SortType { get; set; } = "asc";
 
         //分頁
-        public int? page { get; set; } = 1;
-        public int? pageSize { get; set; } = 9;
+        public int? Page { get; set; } = 1;
+        public int? PageSize { get; set; } = 9;
     }
 }
