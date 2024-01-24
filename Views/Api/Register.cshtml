@@ -32,14 +32,14 @@
 
 @section Scripts{
     <script>
-        const btn=document.querySelector('#button1')
+        const btn = document.querySelector('#button1')
         // const txtName = document.querySelector('#userName');
         // const txtEmail = document.querySelector('#UserEmail');
         // const txtAge = document.querySelector('#userAge');
         const divInfo = document.querySelector('#div1');
         const theForm = document.querySelector('#userForm');
 
-        btn.addEventListener('click',async(event)=>{
+        btn.addEventListener('click', async (event) => {
             event.preventDefault(); //防止submit送出的功能
 
             //透過FormData物件讀取表單中使用者輸入的資料
@@ -72,12 +72,11 @@
 
         })
 
-        // (async () => {
-        //     const url = '@Url.Content("~api/register")?name=Tom&age=30&email=Tom@company.com';
-        //     const response = await fetch(url);
-        //     const datas = await response.text();
-        //     console.log(datas);
-        // })();
+                // (async () => {
+                //     const url = '@Url.Content("~api/register")?name=Tom&age=30&email=Tom@company.com';
+                //     const response = await fetch(url);
+                //     const datas = await response.text();
+                //     console.log(datas);
+                // })();
     </script>
 }
-
