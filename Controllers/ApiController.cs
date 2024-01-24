@@ -8,9 +8,11 @@ namespace WebApplication2.Controllers
     {
         //注入DBContext物件--------------
         private readonly MyDBContext _dbContext;
-        public ApiController(MyDBContext dbContext)
+        private readonly IWebHostEnvironment _host;
+        public ApiController(MyDBContext dbContext, IWebHostEnvironment host)
         {
             _dbContext = dbContext;
+            _host = host;
         }
         //-----------------------------------
 
@@ -58,9 +60,30 @@ namespace WebApplication2.Controllers
             {
                 _user.Name = "Guest";
             }
-            return Content($"Hello{_user.Name},you are{_user.Age} years old. Yuor email address is {_user.Email}");
+           //string uploadPath=@"C:/......."
+
+            //todo 檔案重名
+            //todo 限制檔案類型
+            //todo 限制上傳大小
+            string fileName = "enpty.jpeg";
+            if(_user.Avatar!=null)
+            {
+                fileName = _user.Avatar.FileName;
+            }
+
+            //取得檔案實際路徑
+            string uploadPath = Path.Combine(_host.WebRootPath, "uploads", fileName);
+
+            using(var fileStream=new FileStream(uploadPath, FileMode.Create))
+            {
+                _user.Avatar?.CopyTo(fileStream);
+            }
+
+            return Content($"{_user.Avatar?.FileName}-{_user.Avatar?.Length}-{_user.Avatar?.ContentType}");
 
         }
+
+        //return Content($"Hello{_user.Name},you are{_user.Age} years old. Yuor email address is {_user.Email}");
 
 
         //public IActionResult Register(string name, int age = 26)
@@ -72,5 +95,10 @@ namespace WebApplication2.Controllers
         //    return Content($"Hello{name},you are{age} years old.");
 
         //}
+
+        public IActionResult Spots(SearchDto _search) 
+        {
+            return Json(_search);
+        }
     }
 }

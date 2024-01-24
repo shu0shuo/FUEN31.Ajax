@@ -1,5 +1,6 @@
 ﻿
 @{
+    // home register
     ViewData["Title"] = "Register";
 }
 
@@ -20,6 +21,11 @@
                 <label for="userAge" class="form-label">年紀：</label>
                 <input type="number" class="form-control" id="userAge" name="Age">
             </div>
+            <div class="mb-3">
+                <label for="userAvatar" class="form-label">頭像：</label>
+                <input type="file" class="form-control" id="userAvatar" name="avatar">
+            </div>
+
 
             <button id="button1" type="submit" class="btn btn-primary">送出</button>
         </form>
@@ -46,7 +52,7 @@
             const formData = new FormData(theForm);
 
             //將formData資料傳到server
-            const url = '@Url.Content("~api/register")';
+            const url = '@Url.Content("~/api/register")';
             const response = await fetch(url, { method: 'POST', body: formData });
             const datas = await response.text();
             divInfo.innerHTML = datas;
@@ -62,7 +68,7 @@
             // console.log(txtEmail.value);
             // console.log(txtAge.value);
 
-            // const url = `@Url.Content("~/api/register")?name=${txtName.value}&age=${txtAge.value}&email=${txtEmail.value}`;
+            // const url = 'Url.Content("~/api/register")?name=${txtName.value}&age=${txtAge.value}&email=${txtEmail.value}`;
             // //console.log(url);
 
             //     const response = await fetch(url);
@@ -73,7 +79,7 @@
         })
 
         // (async () => {
-        //     const url = '@Url.Content("~api/register")?name=Tom&age=30&email=Tom@company.com';
+        //     const url = 'Url.Content("~api/register")?name=Tom&age=30&email=Tom@company.com';
         //     const response = await fetch(url);
         //     const datas = await response.text();
         //     console.log(datas);
