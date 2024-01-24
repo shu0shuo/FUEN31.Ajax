@@ -96,7 +96,9 @@ namespace WebApplication2.Controllers
 
         //}
 
-        public IActionResult Spots(SearchDto _search) 
+        [HttpPost]
+        //frombody表示預告要從body傳資料進來
+        public IActionResult Spots([FromBody]SearchDto _search) 
         {
             return Json(_search);
         }
