@@ -54,7 +54,7 @@ namespace WebApplication2.Controllers
 
         }
 
-
+        [HttpPost]
         public IActionResult Register(Member member, IFormFile Avatar)
         {
             string fileName = "empty.jpg";
@@ -183,7 +183,8 @@ namespace WebApplication2.Controllers
 
         public IActionResult SpotsTitle(string keyword) 
         {
-            return Json(_dbContext.Categories);
+            var spots=_dbContext.Spots.Where(s=>s.SpotTitle.Contains(keyword)).Select(s=>s.SpotTitle).Take(8);
+            return Json(spots);
         }
     }
 }
