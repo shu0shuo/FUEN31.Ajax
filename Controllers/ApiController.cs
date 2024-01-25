@@ -128,7 +128,14 @@ namespace WebApplication2.Controllers
 
             //取出分頁資料
             spots = spots.Skip((page - 1) * pageSize).Take(pageSize);
-            return Json(spots);
+
+            //設計回傳資料格式
+            SpotsPagingDto spotspaging=new SpotsPagingDto();
+            spotspaging.TotalPages= totalPages;
+            spotspaging.SpotsResult=spots.ToList();
+
+            return Json(spotspaging);
+            //return Json(spots);
         }
     }
 }

@@ -4,6 +4,30 @@
 }
 
 <h1>Spots</h1>
+<nav aria-label="...">
+    <ul class="pagination">
+        <li class="page-item disabled">
+            <a class="page-link">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="col-3">
+    <input type="search" id="inputKeyword" class="form-control" placeholder="搜尋" />
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4" id="spots">
+ 
+   
+</div>
 
 @section Scripts{
     <script>
@@ -16,6 +40,10 @@
             "sortType": "asc",
             "sortBy": ""
         };
+        const divSpots = document.querySelector('#spots');
+        const inputKeyword = document.querySelector('#inputKeyword');
+        const ulPaging = document.querySelector('#pagination');
+
         //根據searchData的條件讀取景點資料
         const loadSpots = async () => {
             const response =await fetch('@Url.Content("~/api/spots")', {
@@ -26,10 +54,50 @@
                 }
             });
             const datas = await response.json();
-            console.log(datas);
-        }
+           // console.log(datas);
 
+           //產生分頁按鈕
+           let liPaging=``
+
+           //產生景點卡
+            const cardSpots = datas.spotsResult.map(spot => {
+             
+                const { spotId, spotTitle, spotDescription, spotImage, address } = spot;
+                return (`
+                           <div class="col">
+                <div class="card h-100">
+                                    <img src="${spotImage}" class="card-img-top" alt="${spotTitle}">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                                <p class="card-text">${spotDescription.length <= 100 ? spotDescription : spotDescription.substring(0, 100)}</p>
+                    </div>
+                    <div class="card-footer">
+                                <small class="text-body-secondary">${address}</small>
+                    </div>
+                </div>
+            </div>
+
+                  `)
+            });
+
+            console.log(cardSpots);
+          divSpots.innerHTML = cardSpots.join(""); 
+        }
+ 
         //載入景點
         loadSpots();
+
+        // <div>
+        //     <div class="col" >
+        //         <div class="card h-100" >
+        //             <img src="${spotImage}" class="card-img-top" alt = "${spotTitle}" >
+        //                 <div class="card-body" >
+        //                     <h5 class="card-title" > Card title < /h5>
+        //                         < p class="card-text" > ${ spotDescription.length <= 100 ? spotDescription : spotDescription.substring(0, 100) } </p>
+        //                             < /div>
+        //                             < div class="card-footer" >
+        //                                 <small class="text-body-secondary" > ${ address } </small>
+        //                                     < /div>
+        //                                     < /div>
     </script>
 }
