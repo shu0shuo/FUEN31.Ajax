@@ -2,6 +2,13 @@
 @{
     ViewData["Title"] = "Spots";
 }
+@section Styles{
+    <style>
+        .currentPage{
+            background-color:gainsboro
+        }
+    </style>
+}
 
 <h1>Spots</h1>
 <nav aria-label="...">
@@ -53,14 +60,25 @@
            // console.log(datas);
 
            //產生分頁按鈕
-            let liPaging = "";
-            for (let i = 1; max = datas.totalPages; i++) {
-                if (i === searchData.page) {
-                    liPaging += ` <li class="page-item" onclick="pagingHandler(${i})"><a class="page-link currentPage" href="#">${i}</a></li>`
-                } else {
-                    liPaging += ` <li class="page-item" onclick="pagingHandler(${i})"><a class="page-link" href="#">${i}</a></li>`
-                }
+            // let liPaging = "";
+            // for (let i = 1,max = datas.totalPages; i<=max; i++) {
+            //     if (i === searchData.page) {
+            //         liPaging += ` <li class="page-item" onclick="pagingHandler(${i})"><a class="page-link currentPage" href="#">${i}</a></li>`;
+            //     } else {
+            //         liPaging += ` <li class="page-item" onclick="pagingHandler(${i})"><a class="page-link" href="#">${i}</a></li>`;
+            //     }
                 
+            // }
+            // ulPaging.innerHTML = liPaging;
+
+            let liPaging = "";
+            for (let i = 1, max = datas.totalPages; i <= max; i++) {
+                if (i === searchData.page) {
+                    liPaging += `<li class="page-item" onclick="pagingHandler(${i})"><a class="page-link currentPage" href="#">${i}</a></li>`;
+                } else {
+                    liPaging += `<li class="page-item" onclick="pagingHandler(${i})"><a class="page-link" href="#">${i}</a></li>`;
+                }
+
             }
             ulPaging.innerHTML = liPaging;
 
