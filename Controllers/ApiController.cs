@@ -54,34 +54,72 @@ namespace WebApplication2.Controllers
 
         }
 
-        public IActionResult Register(UserDto _user)
+
+        public IActionResult Register(Member member, IFormFile Avatar)
         {
-            if (string.IsNullOrEmpty(_user.Name))
+            string fileName = "empty.jpg";
+            if(Avatar != null)
             {
-                _user.Name = "Guest";
-            }
-           //string uploadPath=@"C:/......."
-
-            //todo 檔案重名
-            //todo 限制檔案類型
-            //todo 限制上傳大小
-            string fileName = "enpty.jpeg";
-            if(_user.Avatar!=null)
-            {
-                fileName = _user.Avatar.FileName;
+                fileName = Avatar.Name;
             }
 
-            //取得檔案實際路徑
-            string uploadPath = Path.Combine(_host.WebRootPath, "uploads", fileName);
-
+            //檔案上傳路徑
+            string uploadPath=Path.Combine(_host.WebRootPath, "uploads", fileName);
+            //檔案上傳
             using(var fileStream=new FileStream(uploadPath, FileMode.Create))
             {
-                _user.Avatar?.CopyTo(fileStream);
+                Avatar?.CopyTo(fileStream);
             }
 
-            return Content($"{_user.Avatar?.FileName}-{_user.Avatar?.Length}-{_user.Avatar?.ContentType}");
+            //轉成二進
+            byte[]? imgByte= null;
+            using(var memoryStream=new MemoryStream())
+            {
+                Avatar?.CopyTo(memoryStream);
+                imgByte = memoryStream.ToArray();
+            }
+            member.FileName = fileName;
+            member.FileData=imgByte;
+            
+            //加進資料庫
+            _dbContext.Members.Add(member);
+            _dbContext.SaveChanges();
+            return Content("上傳成功");
 
         }
+
+
+
+
+
+        //public IActionResult Register(UserDto _user)
+        //{
+        //    if (string.IsNullOrEmpty(_user.Name))
+        //    {
+        //        _user.Name = "Guest";
+        //    }
+        //   //string uploadPath=@"C:/......."
+
+        //    //todo 檔案重名
+        //    //todo 限制檔案類型
+        //    //todo 限制上傳大小
+        //    string fileName = "enpty.jpeg";
+        //    if(_user.Avatar!=null)
+        //    {
+        //        fileName = _user.Avatar.FileName;
+        //    }
+
+        //    //取得檔案實際路徑
+        //    string uploadPath = Path.Combine(_host.WebRootPath, "uploads", fileName);
+
+        //    using(var fileStream=new FileStream(uploadPath, FileMode.Create))
+        //    {
+        //        _user.Avatar?.CopyTo(fileStream);
+        //    }
+
+        //    return Content($"{_user.Avatar?.FileName}-{_user.Avatar?.Length}-{_user.Avatar?.ContentType}");
+
+        //}
 
         //return Content($"Hello{_user.Name},you are{_user.Age} years old. Yuor email address is {_user.Email}");
 
