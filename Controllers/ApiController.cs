@@ -137,5 +137,15 @@ namespace WebApplication2.Controllers
             return Json(spotspaging);
             //return Json(spots);
         }
+
+        public IActionResult Categories()
+        {
+            return Json(_dbContext.Categories);
+        }
+
+        public IActionResult SpotsTitle(string keyword) 
+        {
+            return Json(_dbContext.Categories);
+        }
     }
 }

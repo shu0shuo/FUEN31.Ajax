@@ -6,17 +6,13 @@
 <h1>Spots</h1>
 <nav aria-label="...">
     <ul class="pagination">
-        <li class="page-item disabled">
+       @*  <li class="page-item disabled">
             <a class="page-link">Previous</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
+        </li> *@
+       
+  @*       <li class="page-item">
             <a class="page-link" href="#">Next</a>
-        </li>
+        </li> *@
     </ul>
 </nav>
 
@@ -57,7 +53,11 @@
            // console.log(datas);
 
            //產生分頁按鈕
-           let liPaging=``
+            let liPaging = "";
+            for (let i = 1; max = datas.totalPages; i++) {
+                liPaging += ` <li class="page-item" onclick="pagingHandler(${i})"><a class="page-link" href="#">${i}</a></li>`
+            }
+            ulPaging.innerHTML = liPaging;
 
            //產生景點卡
             const cardSpots = datas.spotsResult.map(spot => {
@@ -83,21 +83,26 @@
             console.log(cardSpots);
           divSpots.innerHTML = cardSpots.join(""); 
         }
+
+        //綁定搜尋框
+        inputKeyword.addEventListener('keydown', event => {
+            if (event.which === 13) {
+                searchData.keyword = event.target.value;
+                searchData.page = 1;
+                loadSpots();
+            }
+        })
+
+        //分頁
+        const pagingHandler = (page) => {
+            searchData.page = page;
+            loadSpots();
+        }
+
+
  
         //載入景點
         loadSpots();
 
-        // <div>
-        //     <div class="col" >
-        //         <div class="card h-100" >
-        //             <img src="${spotImage}" class="card-img-top" alt = "${spotTitle}" >
-        //                 <div class="card-body" >
-        //                     <h5 class="card-title" > Card title < /h5>
-        //                         < p class="card-text" > ${ spotDescription.length <= 100 ? spotDescription : spotDescription.substring(0, 100) } </p>
-        //                             < /div>
-        //                             < div class="card-footer" >
-        //                                 <small class="text-body-secondary" > ${ address } </small>
-        //                                     < /div>
-        //                                     < /div>
     </script>
 }
