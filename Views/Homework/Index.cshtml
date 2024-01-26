@@ -40,22 +40,17 @@
         })
       
         //createCard
-        // let createCards = ((card = {}) => {
-        //     let stitle = card.stitle;
-        //     let xbody = card.xbody;
-        //     let images = card.file.img;
-        //     console.log(typeof (images));
-        //     let carouselItems = images.map(img => {
-        //         const { text, description } = img;
-        //         return { text, description };
-        //         //return createCarouselItems(img.text, img["description"])
-        //     });
-        //     console.log(carouselItems);
-        //     // if (Array.isArray(images)) {
+        let createCards = ((card = {}) => {
+            let stitle = card.stitle;
+            let xbody = card.xbody;
+            let files = card.file;
+            console.log(typeof (files));
+            let carouselItems = files.flatMap(file=>file.img);
+            console.log(carouselItems);
+            // if (Array.isArray(images)) {
               
-        //     // }
-        //     return "";
-        // })
+            // }
+            return carouselItems;
 
             // let template = `<div class="row row-cols-1 row-cols-md-2 g-4">
             //               <div class="col">
@@ -69,41 +64,41 @@
             //               </div>`
 
 
-        //     let template = `<div class="row row-cols-1 row-cols-md-2 g-4">
-        //                         <div class="col">
-        //                                      <div class="card">
-        //                                                <div id="carousel-${stitle}" class="carousel slide" data-bs-ride="carousel">
-        //                                         <div class="carousel-inner">
-        //                                                     ${carouselItems.join("")}
-        //                                         </div>
-        //                                         <button class="carousel-control-prev" type="button" data-bs-target="#carousel-${stitle}" data-bs-slide="prev">
-        //                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        //                                             <span class="visually-hidden">Previous</span>
-        //                                         </button>
-        //                                         <button class="carousel-control-next" type="button" data-bs-target="#carousel-${stitle}" data-bs-slide="next">
-        //                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        //                                             <span class="visually-hidden">Next</span>
-        //                                         </button>
-        //                                     </div>
-        //                               <div class="card-body">
-        //                                 <h5 class="card-title">${stitle}</h5>
-        //                                 <p class="card-text">${xbody}</p>
-        //                               </div>
-        //                             </div>
-        //                         </div>
-        //                     </div>`;
+            let template = `<div class="row row-cols-1 row-cols-md-2 g-4">
+                                <div class="col">
+                                             <div class="card">
+                                                       <div id="carousel-${stitle}" class="carousel slide" data-bs-ride="carousel">
+                                                <div class="carousel-inner">
+                                                            ${carouselItems.join("")}
+                                                </div>
+                                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-${stitle}" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-${stitle}" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Next</span>
+                                                </button>
+                                            </div>
+                                      <div class="card-body">
+                                        <h5 class="card-title">${stitle}</h5>
+                                        <p class="card-text">${xbody}</p>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>`;
 
-        //     let node = document.createElement("div");
-        //     node.innerHTML = template;
-        // spotsContainer.append(node);
+            let node = document.createElement("div");
+            node.innerHTML = template;
+        spotsContainer.append(node);
 
-        // });
+        });
 
-        // const createdSpots = northernSpots.map((spots) => {
-        //     return createCards(spots);
-        // }).join("");
+        const createdSpots = northernSpots.map((spots) => {
+            return createCards(spots);
+        }).join("");
 
        
-        // console.log(spots.CommonFormat.Section);
+        console.log(spots.CommonFormat.Section);
     </script>
 }
